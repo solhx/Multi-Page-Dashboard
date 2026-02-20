@@ -7,6 +7,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
   const [showNotifications, setShowNotifications] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
   const recentActivities = mockActivities.slice(0, 3);
 
   const getTimeAgo = (timestamp: string): string => {
@@ -36,9 +37,9 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
 
   return (
     <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
-      <div className="flex items-center justify-between px-4 lg:px-8 py-4">
+      <div className="flex items-center justify-between px-4 lg:px-8 py-3 lg:py-4">
         {/* Left side - Menu button & Search */}
-        <div className="flex items-center space-x-4 flex-1">
+        <div className="flex items-center space-x-2 lg:space-x-4 flex-1">
           <button
             onClick={onMenuClick}
             className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
@@ -58,6 +59,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
             </svg>
           </button>
 
+          {/* Search - Desktop always visible, Mobile with toggle */}
           <div className="hidden md:flex items-center flex-1 max-w-md">
             <div className="relative w-full">
               <input
@@ -80,10 +82,30 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
               </svg>
             </div>
           </div>
+
+          {/* Mobile Search Toggle */}
+          <button
+            onClick={() => setShowSearch(!showSearch)}
+            className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+          >
+            <svg
+              className="w-6 h-6 text-gray-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+          </button>
         </div>
 
         {/* Right side - Notifications & Profile */}
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-2 lg:space-x-4">
           {/* Notifications */}
           <div className="relative">
             <button
@@ -113,7 +135,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
                   className="fixed inset-0 z-10"
                   onClick={() => setShowNotifications(false)}
                 />
-                <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 z-20">
+                <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 z-20 max-w-[calc(100vw-2rem)]">
                   <div className="p-4 border-b border-gray-200">
                     <h3 className="text-lg font-semibold text-gray-900">
                       Recent Activities
@@ -152,17 +174,44 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
           </div>
 
           {/* Profile */}
-          <div className="flex items-center space-x-3 pl-4 border-l border-gray-200">
+          <div className="flex items-center space-x-2 sm:space-x-3 pl-2 sm:pl-4 border-l border-gray-200">
             <div className="hidden sm:block text-right">
               <p className="text-sm font-medium text-gray-900">Hossam Hassan</p>
               <p className="text-xs text-gray-500">Freelancer</p>
             </div>
-            <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-full flex items-center justify-center text-white font-semibold">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-full flex items-center justify-center text-white font-semibold text-sm sm:text-base">
               AJ
             </div>
           </div>
         </div>
       </div>
+
+      {/* Mobile Search Bar - Expandable */}
+      {showSearch && (
+        <div className="md:hidden px-4 pb-3">
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search projects, clients..."
+              className="w-full px-4 py-2 pl-10 bg-gray-100 border border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:bg-white focus:border-primary-500 transition-all"
+              autoFocus
+            />
+            <svg
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+          </div>
+        </div>
+      )}
     </header>
   );
 };

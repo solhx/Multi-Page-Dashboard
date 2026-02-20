@@ -15,12 +15,12 @@ const Layout: React.FC = () => {
         onClose={() => setSidebarOpen(false)} 
       />
 
-      {/* Content */}
-      <div className="flex-1 flex flex-col">
-
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col min-w-0">
         <Header onMenuClick={() => setSidebarOpen(true)} />
 
-        <main className="flex-1 p-6">
+        {/* Mobile padding for main content */}
+        <main className="flex-1 p-4 md:p-6 lg:p-8 overflow-x-hidden">
           <Outlet />
         </main>
 

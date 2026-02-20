@@ -53,17 +53,17 @@ const Overview: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-6">
       {/* Page Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Dashboard Overview</h1>
-        <p className="text-gray-600 mt-1">
+        <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">Dashboard Overview</h1>
+        <p className="text-gray-600 mt-1 text-sm lg:text-base">
           Welcome back! Here's what's happening with your projects today.
         </p>
       </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* Stats Grid - Responsive: 1 col mobile, 2 col tablet, 4 col desktop */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
         <StatCard
           title="Total Projects"
           value={totalProjects}
@@ -99,76 +99,80 @@ const Overview: React.FC = () => {
       </div>
 
       {/* Charts Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
         {/* Monthly Earnings Chart */}
-        <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <div className="mb-6">
-            <h2 className="text-xl font-semibold text-gray-900">
+        <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 p-4 lg:p-6">
+          <div className="mb-4 lg:mb-6">
+            <h2 className="text-lg lg:text-xl font-semibold text-gray-900">
               Monthly Earnings
             </h2>
             <p className="text-sm text-gray-600 mt-1">
               Revenue overview for the last 6 months
             </p>
           </div>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={monthlyEarnings}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-              <XAxis dataKey="name" stroke="#6b7280" />
-              <YAxis stroke="#6b7280" />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: '#fff',
-                  border: '1px solid #e5e7eb',
-                  borderRadius: '8px',
-                }}
-              />
-              <Legend />
-              <Bar dataKey="earnings" fill="#0ea5e9" radius={[8, 8, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
+          <div className="w-full h-[250px] lg:h-[300px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={monthlyEarnings}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <XAxis dataKey="name" stroke="#6b7280" fontSize={12} />
+                <YAxis stroke="#6b7280" fontSize={12} />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: '#fff',
+                    border: '1px solid #e5e7eb',
+                    borderRadius: '8px',
+                  }}
+                />
+                <Legend />
+                <Bar dataKey="earnings" fill="#0ea5e9" radius={[8, 8, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
         </div>
 
         {/* Task Distribution Pie Chart */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <div className="mb-6">
-            <h2 className="text-xl font-semibold text-gray-900">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 lg:p-6">
+          <div className="mb-4 lg:mb-6">
+            <h2 className="text-lg lg:text-xl font-semibold text-gray-900">
               Task Types
             </h2>
             <p className="text-sm text-gray-600 mt-1">
               Distribution by category
             </p>
           </div>
-          <ResponsiveContainer width="100%" height={300}>
-            <PieChart>
-              <Pie
-                data={taskDistribution}
-                cx="50%"
-                cy="50%"
-                labelLine={false}
-                label={({ name, percent }) =>
-                  `${name} ${(percent * 100).toFixed(0)}%`
-                }
-                outerRadius={80}
-                fill="#8884d8"
-                dataKey="value"
-              >
-                {taskDistribution.map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
-                  />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
-          </ResponsiveContainer>
+          <div className="w-full h-[250px] lg:h-[300px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={taskDistribution}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  label={({ name, percent }) =>
+                    `${name} ${(percent * 100).toFixed(0)}%`
+                  }
+                  outerRadius={60}
+                  fill="#8884d8"
+                  dataKey="value"
+                >
+                  {taskDistribution.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
         </div>
       </div>
 
       {/* Recent Activity */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-        <div className="p-6 border-b border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900">
+        <div className="p-4 lg:p-6 border-b border-gray-200">
+          <h2 className="text-lg lg:text-xl font-semibold text-gray-900">
             Recent Activity
           </h2>
           <p className="text-sm text-gray-600 mt-1">
@@ -179,9 +183,9 @@ const Overview: React.FC = () => {
           {mockActivities.slice(0, 5).map((activity) => (
             <div
               key={activity.id}
-              className="p-6 hover:bg-gray-50 transition-colors"
+              className="p-4 lg:p-6 hover:bg-gray-50 transition-colors"
             >
-              <div className="flex items-start space-x-4">
+              <div className="flex items-start space-x-3 lg:space-x-4">
                 <div className="flex-shrink-0 w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-xl">
                   {getActivityIcon(activity.type)}
                 </div>
@@ -197,7 +201,7 @@ const Overview: React.FC = () => {
             </div>
           ))}
         </div>
-        <div className="p-4 border-t border-gray-200 text-center">
+        <div className="p-3 lg:p-4 border-t border-gray-200 text-center">
           <button className="text-sm text-primary-600 hover:text-primary-700 font-medium">
             View all activities →
           </button>
