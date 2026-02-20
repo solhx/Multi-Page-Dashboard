@@ -154,7 +154,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
           {/* Profile */}
           <div className="flex items-center space-x-3 pl-4 border-l border-gray-200">
             <div className="hidden sm:block text-right">
-              <p className="text-sm font-medium text-gray-900">Alex Johnson</p>
+              <p className="text-sm font-medium text-gray-900">Hossam Hassan</p>
               <p className="text-xs text-gray-500">Freelancer</p>
             </div>
             <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-full flex items-center justify-center text-white font-semibold">
